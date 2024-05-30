@@ -4,10 +4,16 @@ export async function fetchData<T>(
   url: string,
   adapter: (source: any) => Promise<T>
 ): Promise<T> {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${import.meta.env.VITE_API_TOKEN}`
+    }
+  });
+  
   if (!response.ok) {
     throw new Error(`HTTP error: ${response.status}`);
   }
+  
   const data = await response.json();
   return adapter(data);
 }
