@@ -26,7 +26,7 @@ function authenticateToken(req, res, next) {
 
   if (token == null) return res.sendStatus(401);
 
-  if (token.split(" ")[1] !== validToken) {
+  if (!token.includes(`Bearer ${validToken}`)) {
     return res.sendStatus(403);
   }
 
@@ -50,7 +50,7 @@ apiApp.use((req, res) => {
       })
       .catch((error) => {
         res.status(error.response ? error.response.status : 500)
-            .send(error.message);
+            .send(error.response ? error.response.data : error.message);
       });
 });
 
