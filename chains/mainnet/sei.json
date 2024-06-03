@@ -1,0 +1,46 @@
+{
+  "chain_name": "sei",
+  "coingecko": "sei",
+  "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrySeiApi"],
+  "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrySeiRpc"],
+  "snapshot_provider": "",
+  "coin_type": 60,
+  "sdk_version": "0.46.10",
+  "addr_prefix": "sei",
+  "logo": "/logos/seiRound.png", 
+  "min_tx_fee": "800",
+  "keplr_features": [
+      "ibc-transfer",
+      "ibc-go",
+      "eth-address-gen",
+      "eth-key-sign"
+  ],
+  "features": [
+    "dashboard",
+    "governance",
+    "staking",
+    "blocks",
+    "transactions",
+    "uptime",
+    "ibc",
+    "supply",
+    "parameters",
+    "consensus",
+    "state-sync",
+    "widget"
+  ],
+  "assets": [
+      {
+          "base": "usei",
+          "symbol": "SEI",
+          "exponent": 6,
+          "coingecko_id": "sei-network",
+          "logo": "/logos/seiRound.png", 
+          "gasPriceStep": {
+              "average": 0.025,
+              "high": 0.03,
+              "low": 0.01
+          }
+      }
+  ]
+}
