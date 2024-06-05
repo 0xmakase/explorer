@@ -4,7 +4,7 @@ import { suggestChain } from '@leapwallet/cosmos-snap-provider';
 import { useDashboard, type ChainConfig, useBlockchain, NetworkType } from '@/stores';
 import { CosmosRestClient } from '@/libs/client';
 import { onMounted } from 'vue';
-import AdBanner from '@/components/ad/AdBanner.vue';
+// import AdBanner from '@/components/ad/AdBanner.vue';
 
 const error = ref("")
 const conf = ref("")
@@ -20,7 +20,7 @@ const chains = computed(() => {
 
 onMounted(() => {
     const chainStore = useBlockchain()
-    selected.value = chainStore.current || Object.values(dashboard.chains)[0]
+    selected.value = chainStore.current || Object.values(dashboard.mainnetChains)[0]
     initParamsForKeplr()
 
     dashboard.loadLocalConfig(NetworkType.Mainnet).then((res) => {
@@ -170,6 +170,6 @@ function suggest() {
             </div>
         </div>
 
-        <AdBanner id="suggest-banner-ad" unit="banner" width="970px" height="90px" />
+        <!-- <AdBanner id="suggest-banner-ad" unit="banner" width="970px" height="90px" /> -->
     </div>
 </template>

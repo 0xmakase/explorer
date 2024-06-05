@@ -4,9 +4,10 @@ import {
   useDashboard,
   LoadingStatus,
   type ChainConfig,
+  NetworkType,
 } from '@/stores/useDashboard';
 import ChainSummary from '@/components/ChainSummary.vue';
-import AdBanner from '@/components/ad/AdBanner.vue';
+// import AdBanner from '@/components/ad/AdBanner.vue';
 
 import { computed, onMounted, ref } from 'vue';
 import { useBlockchain } from '@/stores';
@@ -14,22 +15,34 @@ import { useBlockchain } from '@/stores';
 const dashboard = useDashboard();
 
 const keywords = ref('');
-const chains = computed(() => {
+const mainnetChains = computed(() => {
   if (keywords.value) {
     const lowercaseKeywords = keywords.value.toLowerCase();
 
-    return Object.values(dashboard.chains).filter(
+    return Object.values(dashboard.mainnetChains).filter(
       (x: ChainConfig) => x.chainName.toLowerCase().indexOf(lowercaseKeywords) > -1 
       || x.prettyName.toLowerCase().indexOf(lowercaseKeywords) > -1
     );
   } else {
-    return Object.values(dashboard.chains);
+    return Object.values(dashboard.mainnetChains);
+  }
+});
+const testnetChains = computed(() => {
+  if (keywords.value) {
+    const lowercaseKeywords = keywords.value.toLowerCase();
+
+    return Object.values(dashboard.testnetChains).filter(
+      (x: ChainConfig) => x.chainName.toLowerCase().indexOf(lowercaseKeywords) > -1 
+      || x.prettyName.toLowerCase().indexOf(lowercaseKeywords) > -1
+    );
+  } else {
+    return Object.values(dashboard.testnetChains);
   }
 });
 
 const featured = computed(() => {
   const names = ["cosmos", "osmosis", "akash", "celestia", "evmos", "injective", "dydx", "noble"];
-  return chains.value
+  return mainnetChains.value
     .filter(x => names.includes(x.chainName))
     .sort((a, b)=> (names.indexOf(a.chainName) - names.indexOf(b.chainName)))
 })
@@ -87,11 +100,11 @@ const chainStore = useBlockchain()
     <ChainSummary
         v-for="(chain, index) in featured"
         :key="index"
-        :name="chain.chainName"
+        :name="(chain as ChainConfig).chainName"
       />
     </div>
 
-    <AdBanner id="home-banner-ad" unit="banner" width="970px" height="90px" />
+    <!-- <AdBanner id="home-banner-ad" unit="banner" width="970px" height="90px" /> -->
 
     <div class="text-center text-base mt-6 text-primary">
       <h2 class="mb-6">{{ $t('pages.description') }}</h2>
@@ -100,16 +113,32 @@ const chainStore = useBlockchain()
     <div class="flex items-center rounded-lg bg-base-100  border border-gray-200 dark:border-gray-700 mt-10">
       <Icon icon="mdi:magnify" class="text-2xl text-gray-400 ml-3"/>
       <input :placeholder="$t('pages.search_placeholder')" class="px-4 h-10 bg-transparent flex-1 outline-none text-base" v-model="keywords" />
-      <div class="px-4 text-base hidden md:!block">{{ chains.length }}/{{ dashboard.length }}</div>
+      <div class="px-4 text-base hidden md:!block">{{ mainnetChains.length + testnetChains.length }}/{{ dashboard.length }}</div>
     </div>
-
+    <div >
+      <h2 class="mt-6"> Mainnet </h2>
+    </div>
     <div
-      class="grid grid-cols-1 gap-4 mt-6 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
+      class="grid grid-cols-1 gap-4 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
     >
       <ChainSummary
-        v-for="(chain, index) in chains"
+        v-for="(chain, index) in mainnetChains"
         :key="index"
-        :name="chain.chainName"
+        :name="(chain as ChainConfig).chainName"
+        :networkType="NetworkType.Mainnet"
+      />
+    </div>
+    <div >
+      <h2 class="mt-6"> Testnet </h2>
+    </div>
+    <div
+      class="grid grid-cols-1 gap-4 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
+    >
+      <ChainSummary
+        v-for="(chain, index) in testnetChains"
+        :key="index"
+        :name="(chain as ChainConfig).chainName"
+        :networkType="NetworkType.Testnet"
       />
     </div>
   </div>
