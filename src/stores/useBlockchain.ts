@@ -41,7 +41,10 @@ export const useBlockchain = defineStore('blockchain', {
   },
   getters: {
     current(): ChainConfig | undefined {
-      const chain = this.dashboard.chains[this.chainName]
+      const chain = this.dashboard.mainnetChains[this.chainName]
+      if (chain === undefined) {
+        return this.dashboard.testnetChains[this.chainName]
+      } 
       // update chain config with dynamic updated sdk version
       const sdkversion = localStorage.getItem(`sdk_version_${this.chainName}`)
       if(sdkversion && chain?.versions) {
@@ -105,12 +108,20 @@ export const useBlockchain = defineStore('blockchain', {
       // compute favorite menu
       const favNavItems: VerticalNavItems = [];
       Object.keys(this.dashboard.favoriteMap).forEach((name) => {
-        const ch = this.dashboard.chains[name];
+        const ch = this.dashboard.mainnetChains[name];
+        const testch = this.dashboard.testnetChains[name];
         if (ch && this.dashboard.favoriteMap?.[name]) {
           favNavItems.push({
             title: ch.prettyName || ch.chainName || name,
             to: { path: `/${ch.chainName || name}` },
             icon: { image: ch.logo, size: '22' },
+          });
+        }        
+        if (testch && this.dashboard.favoriteMap?.[name]) {
+          favNavItems.push({
+            title: testch.prettyName || testch.chainName || name,
+            to: { path: `/${testch.chainName || name}` },
+            icon: { image: testch.logo, size: '22' },
           });
         }
       });
@@ -189,7 +200,7 @@ export const useBlockchain = defineStore('blockchain', {
 
       // Find the case-sensitive name for the chainName, else simply use the parameter-value.
       const caseSensitiveName = 
-        Object.keys(this.dashboard.chains).find((x) => x.toLowerCase() === name.toLowerCase()) 
+        Object.keys(this.dashboard.mainnetChains).find((x) => x.toLowerCase() === name.toLowerCase()) 
         || name;
 
       // Update chainName if needed

@@ -270,14 +270,15 @@ export const useDashboard = defineStore('dashboard', {
       source: ConfigSource.MainnetCosmosDirectory,
       networkType: NetworkType.Mainnet,
       favoriteMap: favMap as Record<string, boolean>,
-      chains: {} as Record<string, ChainConfig>,
+      mainnetChains: {} as Record<string, ChainConfig>,
+      testnetChains: {} as Record<string, ChainConfig>,
       prices: {} as Record<string, any>,
       coingecko: {} as Record<string, {coinId: string, exponent: number, symbol: string}>,
     };
   },
   getters: {
     length(): number {
-      return Object.keys(this.chains).length;
+      return Object.keys(this.mainnetChains).length + Object.keys(this.testnetChains).length;
     },
   },
   actions: {
@@ -286,23 +287,26 @@ export const useDashboard = defineStore('dashboard', {
       // await this.loadingFromRegistry()
     },
     loadingPrices() {
-      const coinIds = [] as string[]
-      const keys = Object.keys(this.chains) // load all blockchain
-      // Object.keys(this.favoriteMap) //only load favorite once it has too many chains
+      const coinIds = [] as string[];
+      const keys = [...Object.keys(this.mainnetChains), ...Object.keys(this.testnetChains)];
+      
       keys.forEach(k => {
-        if(Array.isArray(this.chains[k]?.assets)) this.chains[k].assets.forEach(a => {
-          if(a.coingecko_id !== undefined && a.coingecko_id.length > 0) {
-            coinIds.push(a.coingecko_id)
-            a.denom_units.forEach(u => {
-              this.coingecko[u.denom] = {
-                coinId: a.coingecko_id || '',
-                exponent: u.exponent,
-                symbol: a.symbol
-              }
-            })
-          } 
-        })
-      })
+        const chain = this.mainnetChains[k];
+        if (Array.isArray(chain?.assets)) {
+          chain.assets.forEach(a => {
+            if (a.coingecko_id !== undefined && a.coingecko_id.length > 0) {
+              coinIds.push(a.coingecko_id);
+              a.denom_units.forEach(u => {
+                this.coingecko[u.denom] = {
+                  coinId: a.coingecko_id || '',
+                  exponent: u.exponent,
+                  symbol: a.symbol
+                };
+              });
+            }
+          });
+        }
+      });
 
       const currencies = ['usd, cny'] // usd,cny,eur,jpy,krw,sgd,hkd
       get(`https://api.coingecko.com/api/v3/simple/price?include_24hr_change=true&vs_currencies=${currencies.join(',')}&ids=${coinIds.join(",")}`).then(x => {
@@ -314,28 +318,33 @@ export const useDashboard = defineStore('dashboard', {
         this.status = LoadingStatus.Loading;
         get(this.source).then((res) => {
           res.chains.forEach((x: DirectoryChain) => {
-            this.chains[x.chain_name] = fromDirectory(x);
+            const chainConfig = fromDirectory(x);
+            if (x.network_type === 'mainnet') {
+              this.mainnetChains[x.chain_name] = chainConfig;
+            } else {
+              this.testnetChains[x.chain_name] = chainConfig;
+            }
           });
           this.status = LoadingStatus.Loaded;
         });
       }
     },
     async loadingFromLocal() {
-      if(window.location.hostname.search("testnet") > -1) {
-        this.networkType = NetworkType.Testnet
-      }
-      const source: Record<string, LocalConfig> =
-        this.networkType === NetworkType.Mainnet
-          ? import.meta.glob('../../chains/mainnet/*.json', { eager: true })
-          : import.meta.glob('../../chains/testnet/*.json', { eager: true });
-      Object.values<LocalConfig>(source).forEach((x: LocalConfig) => {
-        this.chains[x.chain_name] = fromLocal(x);
+      const mainnetSource: Record<string, LocalConfig> = import.meta.glob('../../chains/mainnet/*.json', { eager: true });
+      const testnetSource: Record<string, LocalConfig> = import.meta.glob('../../chains/testnet/*.json', { eager: true });
+
+      Object.values<LocalConfig>(mainnetSource).forEach((x: LocalConfig) => {
+        this.mainnetChains[x.chain_name] = fromLocal(x);
       });
+      Object.values<LocalConfig>(testnetSource).forEach((x: LocalConfig) => {
+        this.testnetChains[x.chain_name] = fromLocal(x);
+      });
+
       this.setupDefault();
       this.status = LoadingStatus.Loaded;
     },
     async loadLocalConfig(network: NetworkType) {
-      const config: Record<string, ChainConfig> = {} 
+      const config: Record<string, ChainConfig> = {};
       const source: Record<string, LocalConfig> =
         network === NetworkType.Mainnet
           ? import.meta.glob('../../chains/mainnet/*.json', { eager: true })
@@ -343,23 +352,23 @@ export const useDashboard = defineStore('dashboard', {
       Object.values<LocalConfig>(source).forEach((x: LocalConfig) => {
         config[x.chain_name] = fromLocal(x);
       });
-      return config
+      return config;
     },
     setupDefault() {
       if (this.length > 0) {
         const blockchain = useBlockchain();
-        const keys = Object.keys(this.favoriteMap)
+        const keys = Object.keys(this.favoriteMap);
         for (let i = 0; i < keys.length; i++) {
-          if (!blockchain.chainName && this.chains[keys[i]] && this.favoriteMap[keys[i]]) {
+          if (!blockchain.chainName && (this.mainnetChains[keys[i]] || this.testnetChains[keys[i]]) && this.favoriteMap[keys[i]]) {
             blockchain.setCurrent(keys[i]);
-            break
+            break;
           }
         }
         if (!blockchain.chainName) {
-          const [first] = Object.keys(this.chains);
+          const [first] = Object.keys(this.mainnetChains).length > 0 ? Object.keys(this.mainnetChains) : Object.keys(this.testnetChains);
           blockchain.setCurrent(first);
         }
-        this.loadingPrices()
+        this.loadingPrices();
       }
     },
     setConfigSource(newSource: ConfigSource) {

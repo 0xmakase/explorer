@@ -12,7 +12,7 @@ import {
   scanCompatibleAccounts,
   type LocalKey,
 } from './utils';
-import AdBanner from '@/components/ad/AdBanner.vue';
+// import AdBanner from '@/components/ad/AdBanner.vue';
 
 const dashboard = useDashboard();
 const chainStore = useBlockchain()
@@ -222,7 +222,7 @@ async function loadBalances(chainName: string, endpoint: string, address: string
       </div>
     </div>
 
-    <AdBanner id="account-banner-ad" unit="banner" width="970px" height="90px" />
+    <!-- <AdBanner id="account-banner-ad" unit="banner" width="970px" height="90px" /> -->
 
     <div class="overflow-x-auto">
       <div v-for="{ key, subaccounts } in accounts" class="bg-base-100 rounded-md my-5 py-5">

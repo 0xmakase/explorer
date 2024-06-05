@@ -149,7 +149,7 @@ export const useFormatter = defineStore('formatter', {
     },
     
     findGlobalAssetConfig(denom: string) {
-      const chains = Object.values(this.dashboard.chains)
+      const chains = Object.values(this.dashboard.mainnetChains)
       for ( let i =0; i < chains.length; i++ ) {
         const assets = chains[i].assets
         const conf = assets.find(a => a.base === denom)

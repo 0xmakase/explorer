@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useDashboard } from '@/stores/useDashboard';
+import { NetworkType, useDashboard } from '@/stores/useDashboard';
 import { computed } from 'vue';
 import { Icon } from '@iconify/vue';
 
@@ -8,10 +8,15 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  networkType: Number,
 });
 
 const dashboardStore = useDashboard();
-const conf = computed(() => dashboardStore.chains[props.name] || {});
+const conf = computed(() => {
+  return props.networkType === NetworkType.Mainnet
+    ? dashboardStore.mainnetChains[props.name] || {}
+    : dashboardStore.testnetChains[props.name] || {};
+});
 
 const addFavor = (e: Event) => {
   e.stopPropagation();
