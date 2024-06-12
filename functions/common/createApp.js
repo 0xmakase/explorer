@@ -3,8 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const qs = require("qs");
-const authenticateToken = require("./common/auth");
+const authenticateToken = require("./auth");
 
+/**
+ * Function to create an express app that proxies requests to a sentry node
+ * @param {*} sentryUrlBase URL of the sentry node
+ * @return {*} Express app
+ */
 function createApp(sentryUrlBase) {
   const app = express();
   app.use(cors({origin: true}));

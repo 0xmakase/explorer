@@ -1,0 +1,31 @@
+{
+    "chain_name": "bera-testnet-v2",
+    "coingecko": "bera",
+    "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentryberaTestApi"],
+    "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentryberaTestRpc"],
+    "snapshot_provider": "",
+    "coin_type": 60,
+    "sdk_version": "0.46.10",
+    "addr_prefix": "bera",
+    "logo": "/logos/beraRound.png",
+    "min_tx_fee": "4000000000000000",
+    "keplr_features": [
+      "ibc-transfer",
+      "ibc-go",
+      "eth-address-gen",
+      "eth-key-sign"
+    ],
+    "assets": [
+      {
+        "base": "ubera",
+        "symbol": "BERA",
+        "exponent": 6,
+        "logo": "/logos/beraRound.png",
+        "gasPriceStep": {
+          "average": 0.025,
+          "high": 0.03,
+          "low": 0.01
+        }
+      }
+    ]
+  }
