@@ -13,7 +13,7 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 // https://vitejs.dev/config/
 export default defineConfig({
   define: {
-    'process.env': {}
+    'process.env': {},
   },
   plugins: [
     vue({
@@ -21,7 +21,7 @@ export default defineConfig({
         compilerOptions: {
           isCustomElement: (tag) =>
             [
-              'ping-connect-wallet',
+              // 'ping-connect-wallet',
               'ping-token-convert',
               'ping-tx-dialog',
             ].includes(tag),
