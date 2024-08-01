@@ -3,11 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const qs = require("qs");
-const authenticateToken = require("./common/auth");
+const authenticateToken = require("./auth");
+
 /**
  * Function to create app
- * @param {*} sentryUrlBase 
- * @returns app
+ * @param {string} sentryUrlBase - The base URL for Sentry.
+ * @return {Object} The created app instance.
  */
 function createApp(sentryUrlBase) {
   const app = express();
