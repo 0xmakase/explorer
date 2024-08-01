@@ -4,7 +4,11 @@ const cors = require("cors");
 const axios = require("axios");
 const qs = require("qs");
 const authenticateToken = require("./common/auth");
-
+/**
+ * Function to create app
+ * @param {*} sentryUrlBase 
+ * @returns app
+ */
 function createApp(sentryUrlBase) {
   const app = express();
   app.use(cors({origin: true}));
