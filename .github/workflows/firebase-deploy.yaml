@@ -1,0 +1,30 @@
+name: Firebase Deploy
+
+on:
+  push:
+    branches:
+      - master  # メインブランチが変更されたときにトリガー
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # Node.jsのバージョンを18に設定
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build the project
+      run: yarn build
+
+    - name: Deploy to Firebase
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: firebase deploy --only hosting,functions
