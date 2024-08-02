@@ -6,9 +6,9 @@ on:
   #   branches: [ master ]
   pull_request:
    # branches: [ master ]
-   paths:
-      - 'chains/mainnet/**'
-      - 'chains/testnet/**'
+  #  paths:
+  #     - 'chains/mainnet/**'
+  #     - 'chains/testnet/**'
 
 jobs:
   deploy:
