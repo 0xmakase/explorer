@@ -29,8 +29,8 @@ jobs:
 
     - name: Set up Firebase service account
       run: |
-        echo "${{ secrets.GCP_SA_KEY_BASE64 }}" | base64 --decode > $HOME/service-account.json
-        export GOOGLE_APPLICATION_CREDENTIALS=$HOME/service-account.json
+        echo "${{ secrets.GCP_SA_KEY_BASE64 }}" | base64 --decode > service-account.json
+        export GOOGLE_APPLICATION_CREDENTIALS=service-account.json
 
     - name: Install functions dependencies
       working-directory: ./functions
@@ -38,5 +38,5 @@ jobs:
 
     - name: Deploy to Firebase
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: $HOME/service-account.json
+        GOOGLE_APPLICATION_CREDENTIALS: service-account.json
       run: firebase deploy --only hosting,functions --debug
