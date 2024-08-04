@@ -16,7 +16,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18'  # Node.jsのバージョンを18に設定
+        node-version: '20'  # Node.jsのバージョンを18に設定
 
     - name: Install dependencies
       run: yarn install
