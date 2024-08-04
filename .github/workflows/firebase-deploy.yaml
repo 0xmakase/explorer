@@ -37,4 +37,4 @@ jobs:
     - name: Deploy to Firebase
       env:
         GOOGLE_APPLICATION_CREDENTIALS: firebase-service-account.json
-      run: firebase deploy --only hosting,functions
+      run: firebase deploy --only hosting,functions --debug
