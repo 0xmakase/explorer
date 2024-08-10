@@ -71,6 +71,7 @@ export const useBlockchain = defineStore('blockchain', {
       let currNavItem: VerticalNavItems = [];
       const router = useRouter();
       const routes = router?.getRoutes() || [];
+      const walletStore = useWalletStore();
       if (this.current && routes) {
         if (this.current?.themeColor) {
           const { color } = hexToRgb(this.current?.themeColor);
@@ -90,6 +91,13 @@ export const useBlockchain = defineStore('blockchain', {
             badgeClass: 'bg-error',
             children: routes
               .filter((x) => x.meta.i18n) // defined menu name
+              .filter((x) => {
+                const connectedWalletName = walletStore.wallet.wallet;
+                const allowedFeatures =
+                  getAllowedFeaturesByWallet(connectedWalletName);
+                if (!allowedFeatures) return true;
+                return allowedFeatures.includes(String(x.meta.i18n));
+              })
               .filter(
                 (x) =>
                   !this.current?.features ||
