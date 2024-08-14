@@ -40,4 +40,6 @@ jobs:
       env:
         GOOGLE_APPLICATION_CREDENTIALS: service-account.json
         CONFIG_VALUES: ${{ secrets.CONFIG_VALUES }}
-      run: firebase deploy --debug
+      run: |
+        echo $CONFIG_VALUES > .runtimeconfig.json
+        firebase deploy --debug
