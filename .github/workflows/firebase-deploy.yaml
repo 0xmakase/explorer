@@ -39,6 +39,7 @@ jobs:
     - name: Deploy to Firebase
       env:
         GOOGLE_APPLICATION_CREDENTIALS: service-account.json
+        SENTRY_TOKEN: ${{ secrets.SENTRY_TOKEN }}
       run: |
         echo "SENTRY_TOKEN=${{ secrets.SENTRY_TOKEN }}" >> .env
         firebase deploy --debug
