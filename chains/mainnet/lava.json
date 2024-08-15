@@ -1,32 +1,32 @@
 {
-    "chain_name": "lava",
-    "coingecko": "lava",
-    "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaApi"],
-    "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaRpc"],
-    "snapshot_provider": "",
-    "coin_type": 60,
-    "sdk_version": "0.46.10",
-    "addr_prefix": "lava",
-    "logo": "/logos/lavaRound.png",
-    "min_tx_fee": "4000000000000000",
-    "keplr_features": [
-      "ibc-transfer",
-      "ibc-go",
-      "eth-address-gen",
-      "eth-key-sign"
-    ],
-    "assets": [
-      {
-        "base": "ulava",
-        "symbol": "LAVA",
-        "exponent": 6,
-        "coingecko_id": "lava-network",
-        "logo": "/logos/lavaRound.png",
-        "gasPriceStep": {
-          "average": 0.025,
-          "high": 0.03,
-          "low": 0.01
-        }
+  "chain_name": "lava",
+  "coingecko": "lava",
+  "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaApi"],
+  "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaRpc"],
+  "snapshot_provider": "",
+  "coin_type": 60,
+  "sdk_version": "0.46.10",
+  "addr_prefix": "lava",
+  "logo": "/logos/lavaRound.png",
+  "min_tx_fee": "4000000000000000",
+  "keplr_features": [
+    "ibc-transfer",
+    "ibc-go",
+    "eth-address-gen",
+    "eth-key-sign"
+  ],
+  "assets": [
+    {
+      "base": "ulava",
+      "symbol": "LAVA",
+      "exponent": 6,
+      "coingecko_id": "lava-network",
+      "logo": "/logos/lavaRound.png",
+      "gasPriceStep": {
+        "average": 0.025,
+        "high": 0.03,
+        "low": 0.01
       }
-    ]
-  }
+    }
+  ]
+}
