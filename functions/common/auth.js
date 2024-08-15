@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 // 環境変数からトークンを読み込み
 const validToken = process.env.SENTRY_TOKEN;
 
