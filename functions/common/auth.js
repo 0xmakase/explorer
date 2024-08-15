@@ -1,7 +1,7 @@
-const functions = require("firebase-functions");
+require("dotenv").config();
 
 // 環境変数からトークンを読み込み
-const validToken = functions.config().sentry.token;
+const validToken = process.env.SENTRY_TOKEN;
 
 /**
  * トークン認証ミドルウェア
