@@ -1,8 +1,8 @@
 {
-    "chain_name": "lava-testnet-2",
+    "chain_name": "lava",
     "coingecko": "lava",
-    "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaTestApi"],
-    "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaTestRpc"],
+    "api":["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaApi"],
+    "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentrylavaRpc"],
     "snapshot_provider": "",
     "coin_type": 60,
     "sdk_version": "0.46.10",
@@ -20,6 +20,7 @@
         "base": "ulava",
         "symbol": "LAVA",
         "exponent": 6,
+        "coingecko_id": "lava-network",
         "logo": "/logos/lavaRound.png",
         "gasPriceStep": {
           "average": 0.025,
