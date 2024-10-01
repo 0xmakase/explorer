@@ -19,7 +19,7 @@
      {
        "base": "uinit",
        "symbol": "INIT",
-       "exponent": 6,
+       "exponent": 18,
        "logo": "/logos/initiaRound.png",
        "gasPriceStep": {
          "average": 0.025,
