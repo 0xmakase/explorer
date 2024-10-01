@@ -6,7 +6,7 @@
    "snapshot_provider": "",
    "coin_type": 60,
    "sdk_version": "0.46.10",
-   "addr_prefix": "initia",
+   "addr_prefix": "init",
    "logo": "/logos/initiaRound.png",
    "min_tx_fee": "4000000000000000",
    "keplr_features": [
