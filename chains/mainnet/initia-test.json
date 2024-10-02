@@ -15,6 +15,19 @@
      "eth-address-gen",
      "eth-key-sign"
    ],
+   "features": [
+    "dashboard",
+    "governance",
+    "blocks",
+    "transactions",
+    "uptime",
+    "ibc",
+    "supply",
+    "parameters",
+    "consensus",
+    "state-sync",
+    "widget"
+  ],
    "assets": [
      {
        "base": "uinit",
