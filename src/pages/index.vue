@@ -116,7 +116,7 @@ const chainStore = useBlockchain()
       <div class="px-4 text-base hidden md:!block">{{ mainnetChains.length + testnetChains.length }}/{{ dashboard.length }}</div>
     </div>
     <div >
-      <h2 class="mt-6"> Mainnet </h2>
+      <h2 class="mt-6"></h2>
     </div>
     <div
       class="grid grid-cols-1 gap-4 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
@@ -126,19 +126,6 @@ const chainStore = useBlockchain()
         :key="index"
         :name="(chain as ChainConfig).chainName"
         :networkType="NetworkType.Mainnet"
-      />
-    </div>
-    <div >
-      <h2 class="mt-6"> Testnet </h2>
-    </div>
-    <div
-      class="grid grid-cols-1 gap-4 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
-    >
-      <ChainSummary
-        v-for="(chain, index) in testnetChains"
-        :key="index"
-        :name="(chain as ChainConfig).chainName"
-        :networkType="NetworkType.Testnet"
       />
     </div>
   </div>
