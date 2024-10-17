@@ -1,0 +1,44 @@
+{
+   "chain_name": "initia-testnet",
+   "coingecko": "initia",
+   "api": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentryinitiaTestApi"],
+   "rpc": ["https://us-central1-omakase-explorer.cloudfunctions.net/proxyToSentryinitiaTestRpc"],
+   "snapshot_provider": "",
+   "coin_type": 60,
+   "sdk_version": "0.46.10",
+   "addr_prefix": "init",
+   "logo": "/logos/initiaRound.png",
+   "min_tx_fee": "4000000000000000",
+   "keplr_features": [
+     "ibc-transfer",
+     "ibc-go",
+     "eth-address-gen",
+     "eth-key-sign"
+   ],
+   "features": [
+    "dashboard",
+    "governance",
+    "blocks",
+    "transactions",
+    "uptime",
+    "ibc",
+    "supply",
+    "parameters",
+    "consensus",
+    "state-sync",
+    "widget"
+  ],
+   "assets": [
+     {
+       "base": "uinit",
+       "symbol": "INIT",
+       "exponent": 6,
+       "logo": "/logos/initiaRound.png",
+       "gasPriceStep": {
+         "average": 0.025,
+         "high": 0.03,
+         "low": 0.01
+       }
+     }
+   ]
+}

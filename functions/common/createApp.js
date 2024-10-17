@@ -6,9 +6,9 @@ const qs = require("qs");
 const authenticateToken = require("./auth");
 
 /**
- * Function to create app
- * @param {string} sentryUrlBase - The base URL for Sentry.
- * @return {Object} The created app instance.
+ * Create an Express app that proxies requests to a Sentry node.
+ * @param {string} sentryUrlBase The base URL of the Sentry node.
+ * @return {express.Application} The Express app.
  */
 function createApp(sentryUrlBase) {
   const app = express();
